@@ -1,3 +1,5 @@
+import { db } from "@/app/config/firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export function GET(request: NextRequest): NextResponse {
@@ -9,5 +11,10 @@ export function GET(request: NextRequest): NextResponse {
 export async function POST(request: NextRequest): Promise<NextResponse<unknown>> {
     const { id } = await request.json();
     // POST /api/users リクエストの処理
+    console.log(id);
+    const QuerySnapshot = await addDoc(collection(db, "message"), {
+        text: `ミッション${id}がクリアされました`,
+        createdAt: Date.now()
+    });
     return NextResponse.json({ message: `Received ID: ${id}` });
 }
