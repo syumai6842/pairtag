@@ -12,7 +12,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<unknown>>
     const { id } = await request.json();
     // POST /api/users リクエストの処理
     console.log(id);
-    const QuerySnapshot = await addDoc(collection(db, "message"), {
+    await addDoc(collection(db, "message"), {
         text: `ミッション${id}がクリアされました`,
         createdAt: Date.now()
     });
