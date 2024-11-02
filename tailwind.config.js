@@ -22,7 +22,10 @@ module.exports = {
       animation: {
         'glow-slow': 'glow 2s ease-in-out infinite',
         'glow-fast': 'glow 1s ease-in-out infinite',
-      }
+      },
+      fontFamily: {
+        nitaRound: ['NitaRound', 'sans-serif'],  // 'NitaRound'は実際のフォント名に合わせてください
+      },
     }
   },
   plugins: [],
