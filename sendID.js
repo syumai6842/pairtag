@@ -3,7 +3,7 @@ const fetch = require('node-fetch'); // node-fetchをインポート
 // APIにIDを送信する関数
 async function sendId(id) {
   try {
-    const response = await fetch('http://localhost:3000/api/getID', {
+    const response = await fetch('https://pairtag.vercel.app/api/getID', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,5 +28,5 @@ async function sendId(id) {
 }
 
 // スクリプトを実行する
-const id = '12345'; // 送信するID
+const id = '1234567890'; // 送信するID
 sendId(id);
