@@ -11,7 +11,11 @@ export default async function Home() {
   console.log(messages);
   return (
     <div>
-      <p>Hello World</p>
+      <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+        {messages.map((message, index) => (
+          <p key={index}>{message}</p>
+        ))}
+      </div>
     </div>
   );
 }
