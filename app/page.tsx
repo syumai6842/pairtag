@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import Image from "next/image";
 import Test from "./test";
+=======
+>>>>>>> 9aa557f51fb4628cb98e3f5a9fbe62efbef3c537
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative">
