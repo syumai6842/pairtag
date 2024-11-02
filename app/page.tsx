@@ -1,30 +1,24 @@
-import Test from "./test";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "./config/firebaseConfig";
+"use client"
+import { useEffect, useState } from "react";
+import "./globals.css";
 
-export default async function Home() {
-  const QuerySnapshot = await getDocs(collection(db, "message"));
-  const messages = QuerySnapshot.docs
-    .map(doc => doc.data())
-    .sort((a, b) => a.createdAt - b.createdAt)
-    .map(data => data.text);
+export default function Home() {
+  const [fadeOut, setFadeOut] = useState(false);
 
-  console.log(messages);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFadeOut(true);
+      setTimeout(() => {
+        window.location.href = '/Entrance';
+      }, 1000);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative">
-      <Test />
-      <Test />
-      <p className="absolute bottom-10 text-center">
-        Hello{" "}
-        <span className="text-yellow-500 text-2xl font-bold
-          animate-pulse
-          hover:opacity-0 hover:scale-95
-          transition-all duration-500 ease-in-out
-          [text-shadow:_0_0_10px_rgb(234_179_8_/_80%)]
-          animate-[glow_1.5s_ease-in-out_infinite]">
-          Fejiek Naoki
-        </span>
-      </p>
+    <div className={`min-h-screen flex items-center justify-center ${fadeOut ? 'fade-out-active' : 'fade-out'}`} style={{ backgroundColor: 'var(--primary)' }}>
+      <img src="img/pairtaglogo.png" alt="Logo" className="h-auto w-80" />
     </div>
   );
 }

@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-<<<<<<< HEAD
   --foreground: #fff;
 }
 
@@ -11,16 +10,21 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #5EA4BF;
   }
-=======
-  --primary: #5EA4BF;
-  --black: #1C1B1F;
-  --white: #fff;
->>>>>>> 3c0d3b01228ca0c00fceec96728d57fe8782b0ea
 }
 
 body {
   color: var(--foreground);
   background: var(--primary);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.fade-out {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.fade-out-active {
+  opacity: 0;
 }
