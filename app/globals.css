@@ -7,20 +7,10 @@
   --primary: #5EA4BF;
 }
 
-<<<<<<< HEAD
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #5EA4BF;
-    
-  }
-=======
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
   --primary: #5EA4BF;
->>>>>>> faa61ba44e0a1d9b2ffb27d1022095687b685f5b
 }
 
 body {
