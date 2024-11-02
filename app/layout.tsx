@@ -29,6 +29,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <img 
+          src="/img/TabBar.png" 
+          alt="Tab Bar" 
+          style={{ position: 'absolute', bottom: 0, width: '100%', height: 'auto' }}
+        />
       </body>
     </html>
   );
