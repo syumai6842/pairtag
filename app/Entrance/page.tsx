@@ -9,7 +9,7 @@ export default function Entrance() {
       className="min-h-screen flex flex-col items-center justify-center translate-y-[-25vh]"
       style={{ backgroundColor: 'var(--primary)' }}
     >
-      <span className="font-bold tracking-tighter text-[#2B2B2B] text-[3.25rem] whitespace-nowrap ml-auto mr-16 translate-y-[120px]">ハンター</span>
+      <span className="font-bold tracking-tighter text-[#2B2B2B] text-[3.25rem] whitespace-nowrap ml-auto mr-16 translate-y-[135px]">ハンター</span>
       <div className="flex items-center mb-6 self-start ml-16">
         <div className="relative">
           <Image
@@ -21,7 +21,7 @@ export default function Entrance() {
           />
         </div>
       </div>
-      <div className="bg-[#2B2B2B] text-white px-24 py-2 mb-40 rounded-3xl">
+      <div className="bg-[#2B2B2B] text-white px-24 py-2 mb-48 rounded-3xl">
         <p className="text-4xl font-bold tracking-tighter">選ぶ</p>
       </div>
       <div className="flex items-center w-full whitespace-nowrap mt-[-10vh]">
