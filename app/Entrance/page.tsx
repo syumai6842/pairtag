@@ -1,8 +1,10 @@
 "use client"
 import "../globals.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Entrance() {
+  const router = useRouter();
   return (
     <div
       key="entrance"
@@ -22,7 +24,9 @@ export default function Entrance() {
           </div>
           <span className="tracking-tighter text-[#2B2B2B] text-[3.25rem] whitespace-nowrap ml-4 leading-none">ハンター</span>
         </div>
-        <div className="bg-[#2B2B2B] text-white px-24 py-2 rounded-3xl">
+        <div className="bg-[#2B2B2B] text-white px-24 py-2 rounded-3xl" onClick={() => {
+          router.push('/Hunter');
+        }}>
           <p className="text-4xl tracking-tighter">選ぶ</p>
         </div>
       </div>
