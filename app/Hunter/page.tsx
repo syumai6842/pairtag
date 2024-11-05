@@ -16,7 +16,13 @@ export default function Hunter() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
       <header className="flex justify-between items-start py-12 pl-4 text-white">
-        <div className="flex flex-col items-baseline">
+        <div 
+          className="flex flex-col items-baseline"
+          style={{
+            transform: isMailboxOpen ? 'translateX(-200px)' : 'translateX(0)',
+            transition: 'transform 0.3s ease'
+          }}
+        >
           <h1 className="text-1xl font-bold">あなたは</h1>
           <h1 className="text-5xl font-bold pl-4">ハンター</h1>
         </div>
@@ -24,7 +30,13 @@ export default function Hunter() {
           <button
             onClick={() => setIsMailboxOpen(!isMailboxOpen)}
             className="bg-white p-2 rounded-l-full rounded-r-none flex items-center justify-center"
-            style={{ width: '150px', height: '65px' }}
+            style={{ 
+              width: isMailboxOpen ? '300px' : '150px',
+              height: isMailboxOpen ? '1000px' : '65px',
+              transition: 'width 0.3s ease, border-radius 0.3s ease',
+              borderTopLeftRadius: isMailboxOpen ? '20px' : '32.5px',
+              borderBottomLeftRadius: isMailboxOpen ? '20px' : '32.5px'
+            }}
           >
             <Image src="/img/mail_black.png" alt="Mailbox" width={65} height={65} />
           </button>
