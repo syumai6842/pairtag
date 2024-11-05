@@ -15,15 +15,18 @@ export default function Hunter() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
-      <header className="flex justify-between items-center py-4 pl-4 text-white">
-        <h1 className="text-2xl font-bold">あなたはハンター</h1>
+      <header className="flex justify-between items-end py-12 pl-4 text-white">
+        <div className="flex flex-col items-baseline">
+          <h1 className="text-1xl font-bold">あなたは</h1>
+          <h1 className="text-5xl font-bold pl-4">ハンター</h1>
+        </div>
         <div className="relative">
           <button
             onClick={() => setIsMailboxOpen(!isMailboxOpen)}
-            className="bg-white p-2 rounded-l-full rounded-r-none"
-            style={{ width: '120px', height: '80px' }}
+            className="bg-white p-2 rounded-l-full rounded-r-none flex items-center justify-center"
+            style={{ width: '150px', height: '65px' }}
           >
-            <Image src="/img/mail_black.png" alt="Mailbox" width={40} height={40} />
+            <Image src="/img/mail_black.png" alt="Mailbox" width={65} height={65} />
           </button>
           {isMailboxOpen && (
             <div className="absolute right-0 top-12 bg-white text-black p-4 rounded shadow-lg">
