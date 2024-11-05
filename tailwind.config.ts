@@ -15,6 +15,7 @@ const config: Config = {
       fontFamily: {
         'geist-sans': ['var(--font-geist-sans)'],
         'geist-mono': ['var(--font-geist-mono)'],
+        'nitalago': ['"nitalago-ruika"', 'sans-serif'],
       },
     },
   },
