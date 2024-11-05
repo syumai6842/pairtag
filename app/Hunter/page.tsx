@@ -21,7 +21,7 @@ export default function Hunter() {
           <button
             onClick={() => setIsMailboxOpen(!isMailboxOpen)}
             className="bg-white p-2 rounded-l-full rounded-r-none"
-            style={{ width: '80px', height: '40px' }}
+            style={{ width: '120px', height: '80px' }}
           >
             <Image src="/img/mail_black.png" alt="Mailbox" width={40} height={40} />
           </button>
