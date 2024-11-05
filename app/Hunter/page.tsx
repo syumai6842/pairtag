@@ -15,12 +15,12 @@ export default function Hunter() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
-      <header className="flex justify-between items-end py-12 pl-4 text-white">
+      <header className="flex justify-between items-start py-12 pl-4 text-white">
         <div className="flex flex-col items-baseline">
           <h1 className="text-1xl font-bold">あなたは</h1>
           <h1 className="text-5xl font-bold pl-4">ハンター</h1>
         </div>
-        <div className="relative">
+        <div className="relative pt-2">
           <button
             onClick={() => setIsMailboxOpen(!isMailboxOpen)}
             className="bg-white p-2 rounded-l-full rounded-r-none flex items-center justify-center"
@@ -29,7 +29,7 @@ export default function Hunter() {
             <Image src="/img/mail_black.png" alt="Mailbox" width={65} height={65} />
           </button>
           {isMailboxOpen && (
-            <div className="absolute right-0 top-12 bg-white text-black p-4 rounded shadow-lg">
+            <div className="absolute right-0 top-16 bg-white text-black p-4 rounded shadow-lg">
               <h2 className="text-xl font-bold mb-2">メール一覧</h2>
               <ul>
                 <li>メール1</li>
@@ -40,7 +40,7 @@ export default function Hunter() {
           )}
         </div>
       </header>
-      <main className="flex-grow relative flex justify-center items-center">
+      <main className="flex-grow relative flex justify-center items-start pt-4">
         <Image src="/img/map_white.png" alt="Map" width={360} height={360} />
         {coordinates.map((coord) => (
           <div
