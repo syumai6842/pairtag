@@ -1,37 +1,19 @@
 "use client"
-import { useEffect, useState } from "react";
-import { GetLocation, SetLocation } from "../config/firebaseService";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import "../globals.css";
 import Image from "next/image";
 
-function CoodToPosition(lat:number, lng:number):{x:number, y:number} {
-  const windowSize = {width:360, height: 672};
-  const mapStartPoint:{lat:number, lng:number} = {lat:33.973011, lng:134.363519};
-  const mapEndPoint:{lat:number, lng:number} = {lat:33.972478, lng:134.362219};
-  const mapSize:{lat:number, lng:number} = {lat:Math.abs(mapStartPoint.lat-mapEndPoint.lat), lng:Math.abs(mapStartPoint.lng-mapEndPoint.lng)};
-  const distanceFromStart:{lat:number, lng:number} = {lat:mapStartPoint.lat - lat, lng:lng - mapStartPoint.lng};
-  
-  const distanceInPixel:{x:number, y:number} = {x:distanceFromStart.lat/mapSize.lat * windowSize.width, y:-(distanceFromStart.lng/mapSize.lng * windowSize.height)};
-  console.log(distanceInPixel);
-  return distanceInPixel;
-}
+const coordinates = [
+  { id: 1, x: 100, y: 150 },
+  { id: 2, x: 200, y: 250 },
+  { id: 3, x: 300, y: 350 },
+];
 
-export default function Hunter() {
+export default function Tousousya() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
-  const [coordinates, setCoordinates] = useState<{x: number, y: number}[]>([]);
-
-  useEffect(() => {
-    const fetchCoordinates = async () => {
-      const loc = await GetLocation();
-      const coords = loc.map(coord => CoodToPosition(coord.lat, coord.lng));
-      setCoordinates(coords);
-    };
-    fetchCoordinates();
-  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--foreground)' }}>
       {isMailboxOpen && (
         <div 
           className="fixed top-20" 
@@ -39,14 +21,14 @@ export default function Hunter() {
             fontSize: '120px', 
             writingMode: 'vertical-rl',
             transform: 'rotate(180deg)',
-            color: '#5EA4BF'
+            color: '#D07320'
           }}
         >
           mail
         </div>
       )}
       
-      <header className="flex justify-between items-start py-12 pl-4 text-white">
+      <header className="flex justify-between items-start py-8 pl-8 text-[#2B2B2B]">
         <div 
           className="flex flex-col items-baseline"
           style={{
@@ -54,13 +36,13 @@ export default function Hunter() {
             transition: 'transform 0.3s ease'
           }}
         >
-          <h1 className="text-1xl font-bold">あなたは</h1>
-          <h1 className="text-5xl font-bold pl-4">ハンター</h1>
+          <h1 className="text-2xl font-bold">あなたは</h1>
+          <h1 className="text-6xl font-bold pl-4">逃走者</h1>
         </div>
-        <div className="relative pt-2">
+        <div className="relative pt-8">
           <button
             onClick={() => setIsMailboxOpen(!isMailboxOpen)}
-            className="bg-white p-2 rounded-l-full rounded-r-none flex items-center justify-center relative"
+            className="bg-[#2B2B2B] p-2 rounded-l-full rounded-r-none flex items-center justify-center relative"
             style={{ 
               width: isMailboxOpen ? '300px' : '150px',
               height: isMailboxOpen ? '1000px' : '65px',
@@ -70,7 +52,7 @@ export default function Hunter() {
             }}
           >
             <Image 
-              src="/img/mail_black.png" 
+              src="/img/mail_white.png" 
               alt="Mailbox" 
               width={65} 
               height={65}
@@ -81,19 +63,19 @@ export default function Hunter() {
               }}
             />
             {isMailboxOpen && (
-              <div className="absolute left-0 top-16 text-black p-8">
+              <div className="absolute left-0 top-16 text-white p-8">
                 <h2 className="text-3xl font-bold mb-6 -ml-1">受信メール</h2>
                 <ul className="space-y-4">
                   <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
+                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
                     メール1
                   </li>
                   <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
+                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
                     メール2
                   </li>
                   <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
+                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
                     メール3
                   </li>
                 </ul>
@@ -103,10 +85,10 @@ export default function Hunter() {
         </div>
       </header>
       <main className="flex-grow relative flex justify-center items-start pt-4">
-        <Image src="/img/map_white.png" alt="Map" width={360} height={0} />
+        <Image src="/img/map_black.png" alt="Map" width={360} height={360} />
         {coordinates.map((coord) => (
           <div
-            key={coord.x+coord.y*10}
+            key={coord.id}
             className="absolute bg-blue-500 rounded-full w-4 h-4 border-2 border-white"
             style={{ left: coord.x, top: coord.y }}
           />
