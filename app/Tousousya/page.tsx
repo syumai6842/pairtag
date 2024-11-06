@@ -3,14 +3,9 @@ import { useState } from "react";
 import "../globals.css";
 import Image from "next/image";
 
-const coordinates = [
-  { id: 1, x: 100, y: 150 },
-  { id: 2, x: 200, y: 250 },
-  { id: 3, x: 300, y: 350 },
-];
-
 export default function Tousousya() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--foreground)' }}>
@@ -84,23 +79,88 @@ export default function Tousousya() {
           </button>
         </div>
       </header>
-      <main className="flex-grow relative flex justify-center items-start pt-4">
-        <Image src="/img/map_black.png" alt="Map" width={360} height={360} />
-        {coordinates.map((coord) => (
+      <main 
+        className="flex-grow relative flex justify-center items-start pt-4"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setSelectedLocation(null);
+          }
+        }}
+      >
+        <Image 
+          src="/img/map_black.png" 
+          alt="Map" 
+          width={360} 
+          height={360} 
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedLocation(null);
+          }}
+        />
+        
+        {/* Location 1 */}
+        <div 
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedLocation(1);
+          }}
+          className="absolute cursor-pointer"
+          style={{ left: 80, top: 510 }}
+        >
           <Image
-            key={coord.id}
             src="/img/location_orange.png"
-            alt="Location"
+            alt="Location 1"
             width={30}
             height={30}
-            className="absolute"
-            style={{ 
-              left: coord.x, 
-              top: coord.y,
-              transform: 'translate(-50%, -50%)'
-            }}
+            style={{ transform: 'translate(-50%, -50%)' }}
           />
-        ))}
+        </div>
+
+        {/* Location 2 */}
+        <div 
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedLocation(2);
+          }}
+          className="absolute cursor-pointer"
+          style={{ left: 190, top: 550 }}
+        >
+          <Image
+            src="/img/location_orange.png"
+            alt="Location 2"
+            width={30}
+            height={30}
+            style={{ transform: 'translate(-50%, -50%)' }}
+          />
+        </div>
+
+        {/* Location 3 */}
+        <div 
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedLocation(3);
+          }}
+          className="absolute cursor-pointer"
+          style={{ left: 130, top: 120 }}
+        >
+          <Image
+            src="/img/location_orange.png"
+            alt="Location 3"
+            width={30}
+            height={30}
+            style={{ transform: 'translate(-50%, -50%)' }}
+          />
+        </div>
+
+        {/* 画面下部に詳細ボックスを表示 */}
+        {selectedLocation && (
+          <div 
+            className="fixed bottom-0 left-0 right-0 bg-[#2B2B2B] h-40 text-white p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-3xl font-bold">ミッション</h2>
+          </div>
+        )}
       </main>
     </div>
   );
