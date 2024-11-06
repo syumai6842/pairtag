@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { GetLocation } from "../config/firebaseService";
 import "../globals.css";
 import Image from "next/image";
+import { db } from "../config/firebaseConfig";
+import { collection, onSnapshot, Timestamp } from "firebase/firestore";
 
 function CoodToPosition(lat:number, lng:number):{x:number, y:number} {
   const windowSize = {width:360, height: 672};
@@ -18,6 +20,8 @@ function CoodToPosition(lat:number, lng:number):{x:number, y:number} {
 
 export default function Hunter() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
+  const [messages, setMessages] = useState<string[]>([]);
+  const [startTime, setStartTime] = useState<Timestamp[]>([]);
   const [coordinates, setCoordinates] = useState<{x: number, y: number}[]>([]);
 
   useEffect(() => {
@@ -27,6 +31,16 @@ export default function Hunter() {
       setCoordinates(coords);
     };
     fetchCoordinates();
+
+    //メッセージのリスナーを設定
+    onSnapshot(collection(db,"message"), (snapshot) => {
+      const m = snapshot.docs.map(doc => doc.data().text);
+      setMessages(m);
+    });
+
+    onSnapshot(collection(db, "property"), (snapshot) => {
+      setStartTime(snapshot.docs[0].data().startTime);
+    });
   }, []);
 
   return (
@@ -83,18 +97,12 @@ export default function Hunter() {
               <div className="absolute left-0 top-16 text-black p-8">
                 <h2 className="text-3xl font-bold mb-6 -ml-1">受信メール</h2>
                 <ul className="space-y-4">
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール1
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール2
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール3
-                  </li>
+                  {messages.map((text)=>(
+                    <li key={Math.random()} className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
+                      <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
+                      {text}
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}

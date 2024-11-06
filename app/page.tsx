@@ -10,7 +10,7 @@ export default function Home() {
     // ページ読み込み後、自動的に遷移
     const timer = setTimeout(() => {
       router.push("/Entrance");
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [router]);
