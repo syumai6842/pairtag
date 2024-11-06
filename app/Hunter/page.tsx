@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
 import { GetLocation, SetLocation } from "../config/firebaseService";
-import { motion, AnimatePresence } from "framer-motion";
 import "../globals.css";
 import Image from "next/image";
 
@@ -105,24 +104,17 @@ export default function Hunter() {
       <main className="flex-grow relative flex justify-center items-start pt-4">
         <Image src="/img/map_white.png" alt="Map" width={360} height={0} />
         {coordinates.map((coord) => (
-<<<<<<< HEAD
           <Image
-            key={coord.id}
+            key={coord.x+coord.y*10}
             src="/img/location_blue.png"
             alt="Location marker"
             width={24}
             height={24}
             className="absolute"
             style={{ 
-              left: coord.x - 12,
-              top: coord.y - 12
+              left: coord.x,
+              top: coord.y
             }}
-=======
-          <div
-            key={coord.x+coord.y*10}
-            className="absolute bg-blue-500 rounded-full w-4 h-4 border-2 border-white"
-            style={{ left: coord.x, top: coord.y }}
->>>>>>> 27449f81bd2355fbcccc3e59b3eaaa806ed78c80
           />
         ))}
       </main>
