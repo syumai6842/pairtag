@@ -155,10 +155,54 @@ export default function Tousousya() {
         {/* 画面下部に詳細ボックスを表示 */}
         {selectedLocation && (
           <div 
-            className="fixed bottom-0 left-0 right-0 bg-[#2B2B2B] h-40 text-white p-8"
+            className="fixed bottom-0 left-0 right-0 bg-[#2B2B2B] h-36 text-white px-6 pt-4 rounded-t-[20px]"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-3xl font-bold">ミッション</h2>
+            {selectedLocation === 1 && (
+              <>
+                <h2 className="text-2xl font-bold">ミッション 1</h2>
+                <div className="flex items-center mt-5 ml-4">
+                  <Image
+                    src="/img/reward.png"
+                    alt="Reward"
+                    width={35}
+                    height={35}
+                    className="mr-2"
+                  />
+                  <p className="text-2xl">ハンターが5秒間叫ぶ</p>
+                </div>
+              </>
+            )}
+            {selectedLocation === 2 && (
+              <>
+                <h2 className="text-2xl font-bold">ミッション 2</h2>
+                <div className="flex items-center mt-5 ml-4">
+                  <Image
+                    src="/img/reward.png"
+                    alt="Reward"
+                    width={35}
+                    height={35}
+                    className="mr-2"
+                  />
+                  <p className="text-2xl">捕まった逃走者が1組解放</p>
+                </div>
+              </>
+            )}
+            {selectedLocation === 3 && (
+              <>
+                <h2 className="text-2xl font-bold">ミッション 3</h2>
+                <div className="flex items-center mt-5 ml-4">
+                  <Image
+                    src="/img/reward.png"
+                    alt="Reward"
+                    width={35}
+                    height={35}
+                    className="mr-2"
+                  />
+                  <p className="text-2xl">ハンターが15秒間拘束</p>
+                </div>
+              </>
+            )}
           </div>
         )}
       </main>
