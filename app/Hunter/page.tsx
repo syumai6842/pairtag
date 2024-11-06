@@ -104,10 +104,17 @@ export default function Hunter() {
       <main className="flex-grow relative flex justify-center items-start pt-4">
         <Image src="/img/map_white.png" alt="Map" width={360} height={0} />
         {coordinates.map((coord) => (
-          <div
+          <Image
             key={coord.x+coord.y*10}
-            className="absolute bg-blue-500 rounded-full w-4 h-4 border-2 border-white"
-            style={{ left: coord.x, top: coord.y }}
+            src="/img/location_blue.png"
+            alt="Location marker"
+            width={24}
+            height={24}
+            className="absolute"
+            style={{ 
+              left: coord.x,
+              top: coord.y
+            }}
           />
         ))}
       </main>
