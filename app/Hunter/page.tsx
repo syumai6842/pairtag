@@ -5,6 +5,7 @@ import "../globals.css";
 import Image from "next/image";
 import { db } from "../config/firebaseConfig";
 import { collection, onSnapshot, Timestamp } from "firebase/firestore";
+import router from "next/router";
 
 const MAILBOX_STYLES = {
   closed: { width: '150px', height: '65px', borderRadius: '32.5px 0 0 32.5px' },
@@ -63,6 +64,10 @@ export default function Hunter() {
     onSnapshot(collection(db, "property"), (snapshot) => {
       setStartTime(snapshot.docs[0].data().startTime);
     });
+
+    const timer = setTimeout(() => {
+      router.push('/GameEnd');
+    }, 600000); //
   }, []);
 
   return (
