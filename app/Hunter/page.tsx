@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { GetLocation, SetLocation } from "../config/firebaseService";
+import { GetLocation } from "../config/firebaseService";
 import "../globals.css";
 import Image from "next/image";
 

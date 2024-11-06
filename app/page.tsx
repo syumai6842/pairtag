@@ -1,11 +1,10 @@
 "use client"
 import "./globals.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     // ページ読み込み後、自動的に遷移
