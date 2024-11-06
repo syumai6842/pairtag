@@ -50,7 +50,9 @@ export default function Entrance() {
             />
           </div>
         </div>
-        <div className="bg-[#FFFFFF] text-[#2B2B2B] px-24 py-2 rounded-3xl">
+        <div className="bg-[#FFFFFF] text-[#2B2B2B] px-24 py-2 rounded-3xl"onClick={() => {
+          router.push('/Tousousya');
+        }}>
           <p className="text-4xl tracking-tighter">選ぶ</p>
         </div>
       </div>
