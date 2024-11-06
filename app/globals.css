@@ -18,3 +18,52 @@ body {
   background: var(--primary);
   font-family: "nitalago-ruika", Arial, Helvetica, sans-serif;
 }
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: rotate(180deg) translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(180deg) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToTop {
+  0% {
+    transform: rotate(180deg) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(180deg) translateY(-100%);
+    opacity: 0;
+  }
+}

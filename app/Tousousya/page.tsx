@@ -3,20 +3,95 @@ import { useState } from "react";
 import "../globals.css";
 import Image from "next/image";
 
+const MISSIONS = [
+  { id: 1, position: { left: 80, top: 510 }, reward: "ハンターが5秒間叫ぶ" },
+  { id: 2, position: { left: 190, top: 550 }, reward: "捕まった逃走者が1組解放" },
+  { id: 3, position: { left: 130, top: 120 }, reward: "ハンターが15秒間拘束" },
+];
+
+const MAILBOX_STYLES = {
+  closed: { width: '150px', height: '65px', borderRadius: '32.5px 0 0 32.5px' },
+  open: { width: '300px', height: '1000px', borderRadius: '20px 0 0 20px' },
+};
+
 export default function Tousousya() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isMailClosing, setIsMailClosing] = useState(false);
+
+  const handleMainClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setSelectedLocation(null);
+        setIsClosing(false);
+      }, 300);
+    }
+  };
+
+  const handleMailboxToggle = () => {
+    if (isMailboxOpen) {
+      setIsMailClosing(true);
+      setTimeout(() => {
+        setIsMailboxOpen(false);
+        setIsMailClosing(false);
+      }, 500);
+    } else {
+      setIsMailboxOpen(true);
+    }
+  };
+
+  const LocationMarker = ({ mission, onClick }: { mission: typeof MISSIONS[0], onClick: () => void }) => (
+    <div 
+      onClick={onClick}
+      className="absolute cursor-pointer"
+      style={{ left: mission.position.left, top: mission.position.top }}
+    >
+      <Image
+        src="/img/location_orange.png"
+        alt={`Location ${mission.id}`}
+        width={30}
+        height={30}
+        style={{ transform: 'translate(-50%, -50%)' }}
+      />
+    </div>
+  );
+
+  const MissionDetails = ({ missionId }: { missionId: number }) => {
+    const mission = MISSIONS.find(m => m.id === missionId);
+    if (!mission) return null;
+
+    return (
+      <>
+        <h2 className="text-2xl font-bold">ミッション {mission.id}</h2>
+        <div className="flex items-center mt-5 ml-4">
+          <Image
+            src="/img/reward.png"
+            alt="Reward"
+            width={35}
+            height={35}
+            className="mr-2"
+          />
+          <p className="text-2xl">{mission.reward}</p>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--foreground)' }}>
-      {isMailboxOpen && (
+      {(isMailboxOpen || isMailClosing) && (
         <div 
           className="fixed top-20" 
           style={{ 
             fontSize: '120px', 
             writingMode: 'vertical-rl',
             transform: 'rotate(180deg)',
-            color: '#D07320'
+            color: '#D07320',
+            animation: isMailClosing 
+              ? 'slideOutToTop 0.5s ease-out forwards'
+              : 'slideInFromTop 0.5s ease-out'
           }}
         >
           mail
@@ -36,14 +111,11 @@ export default function Tousousya() {
         </div>
         <div className="relative pt-8">
           <button
-            onClick={() => setIsMailboxOpen(!isMailboxOpen)}
+            onClick={handleMailboxToggle}
             className="bg-[#2B2B2B] p-2 rounded-l-full rounded-r-none flex items-center justify-center relative"
             style={{ 
-              width: isMailboxOpen ? '300px' : '150px',
-              height: isMailboxOpen ? '1000px' : '65px',
-              transition: 'width 0.3s ease, border-radius 0.3s ease',
-              borderTopLeftRadius: isMailboxOpen ? '20px' : '32.5px',
-              borderBottomLeftRadius: isMailboxOpen ? '20px' : '32.5px'
+              ...isMailboxOpen ? MAILBOX_STYLES.open : MAILBOX_STYLES.closed,
+              transition: 'all 0.3s ease',
             }}
           >
             <Image 
@@ -81,11 +153,7 @@ export default function Tousousya() {
       </header>
       <main 
         className="flex-grow relative flex justify-center items-start pt-4"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setSelectedLocation(null);
-          }
-        }}
+        onClick={handleMainClick}
       >
         <Image 
           src="/img/map_black.png" 
@@ -94,115 +162,30 @@ export default function Tousousya() {
           height={360} 
           onClick={(e) => {
             e.stopPropagation();
-            setSelectedLocation(null);
+            handleMainClick(e);
           }}
         />
         
-        {/* Location 1 */}
-        <div 
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedLocation(1);
-          }}
-          className="absolute cursor-pointer"
-          style={{ left: 80, top: 510 }}
-        >
-          <Image
-            src="/img/location_orange.png"
-            alt="Location 1"
-            width={30}
-            height={30}
-            style={{ transform: 'translate(-50%, -50%)' }}
+        {/* Location markers */}
+        {MISSIONS.map(mission => (
+          <LocationMarker
+            key={mission.id}
+            mission={mission}
+            onClick={() => setSelectedLocation(mission.id)}
           />
-        </div>
+        ))}
 
-        {/* Location 2 */}
-        <div 
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedLocation(2);
-          }}
-          className="absolute cursor-pointer"
-          style={{ left: 190, top: 550 }}
-        >
-          <Image
-            src="/img/location_orange.png"
-            alt="Location 2"
-            width={30}
-            height={30}
-            style={{ transform: 'translate(-50%, -50%)' }}
-          />
-        </div>
-
-        {/* Location 3 */}
-        <div 
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedLocation(3);
-          }}
-          className="absolute cursor-pointer"
-          style={{ left: 130, top: 120 }}
-        >
-          <Image
-            src="/img/location_orange.png"
-            alt="Location 3"
-            width={30}
-            height={30}
-            style={{ transform: 'translate(-50%, -50%)' }}
-          />
-        </div>
-
-        {/* 画面下部に詳細ボックスを表示 */}
         {selectedLocation && (
           <div 
             className="fixed bottom-0 left-0 right-0 bg-[#2B2B2B] h-36 text-white px-6 pt-4 rounded-t-[20px]"
             onClick={(e) => e.stopPropagation()}
+            style={{
+              animation: isClosing 
+                ? 'slideDown 0.3s ease-out forwards'
+                : 'slideUp 0.3s ease-out',
+            }}
           >
-            {selectedLocation === 1 && (
-              <>
-                <h2 className="text-2xl font-bold">ミッション 1</h2>
-                <div className="flex items-center mt-5 ml-4">
-                  <Image
-                    src="/img/reward.png"
-                    alt="Reward"
-                    width={35}
-                    height={35}
-                    className="mr-2"
-                  />
-                  <p className="text-2xl">ハンターが5秒間叫ぶ</p>
-                </div>
-              </>
-            )}
-            {selectedLocation === 2 && (
-              <>
-                <h2 className="text-2xl font-bold">ミッション 2</h2>
-                <div className="flex items-center mt-5 ml-4">
-                  <Image
-                    src="/img/reward.png"
-                    alt="Reward"
-                    width={35}
-                    height={35}
-                    className="mr-2"
-                  />
-                  <p className="text-2xl">捕まった逃走者が1組解放</p>
-                </div>
-              </>
-            )}
-            {selectedLocation === 3 && (
-              <>
-                <h2 className="text-2xl font-bold">ミッション 3</h2>
-                <div className="flex items-center mt-5 ml-4">
-                  <Image
-                    src="/img/reward.png"
-                    alt="Reward"
-                    width={35}
-                    height={35}
-                    className="mr-2"
-                  />
-                  <p className="text-2xl">ハンターが15秒間拘束</p>
-                </div>
-              </>
-            )}
+            <MissionDetails missionId={selectedLocation} />
           </div>
         )}
       </main>
