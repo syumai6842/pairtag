@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
 import { GetLocation, SetLocation } from "../config/firebaseService";
-import { motion, AnimatePresence } from "framer-motion";
 import "../globals.css";
 import Image from "next/image";
 
