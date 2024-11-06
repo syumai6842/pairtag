@@ -4,6 +4,7 @@ import "../globals.css";
 import Image from "next/image";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 const MISSIONS = [
   { id: 1, position: { left: 80, top: 510 }, reward: "ハンターが5秒間叫ぶ" },
@@ -23,6 +24,7 @@ export default function Tousousya() {
   const [isMailClosing, setIsMailClosing] = useState(false);
   const [missions, setMissions] = useState<boolean[]>([]);
   const [messages, setMessages] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     onSnapshot(collection(db,"mission"), (snapshot) => {
@@ -34,6 +36,13 @@ export default function Tousousya() {
       const m = snapshot.docs.map(doc => doc.data().text);
       setMessages(m);
     });
+
+    // ページに入って10分経ったら/GameEndに遷移する
+    const timer = setTimeout(() => {
+      router.push('/GameEnd');
+    }, 600000); // 10分 = 600000ms
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleMainClick = (e: React.MouseEvent) => {
