@@ -1,7 +1,10 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../globals.css";
 import Image from "next/image";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "../config/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 const MISSIONS = [
   { id: 1, position: { left: 80, top: 510 }, reward: "ハンターが5秒間叫ぶ" },
@@ -19,6 +22,28 @@ export default function Tousousya() {
   const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [isMailClosing, setIsMailClosing] = useState(false);
+  const [missions, setMissions] = useState<boolean[]>([]);
+  const [messages, setMessages] = useState<string[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    onSnapshot(collection(db,"mission"), (snapshot) => {
+      const m = snapshot.docs.sort((a, b) => parseInt(a.id) - parseInt(b.id)).map(doc => doc.data().isCleared);
+      setMissions(m);
+    });
+
+    onSnapshot(collection(db,"message"), (snapshot) => {
+      const m = snapshot.docs.map(doc => doc.data().text);
+      setMessages(m);
+    });
+
+    // ページに入って10分経ったら/GameEndに遷移する
+    const timer = setTimeout(() => {
+      router.push('/GameEnd');
+    }, 600000); // 10分 = 600000ms
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleMainClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -133,18 +158,12 @@ export default function Tousousya() {
               <div className="absolute left-0 top-16 text-white p-8">
                 <h2 className="text-3xl font-bold mb-6 -ml-1">受信メール</h2>
                 <ul className="space-y-4">
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
-                    メール1
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
-                    メール2
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
-                    メール3
-                  </li>
+                  {messages.map((message)=>(
+                    <li key={Math.random()} className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
+                      <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
+                      {message}
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
@@ -165,7 +184,7 @@ export default function Tousousya() {
             handleMainClick(e);
           }}
         />
-        
+
         {/* Location markers */}
         {MISSIONS.map(mission => (
           <LocationMarker
@@ -185,6 +204,15 @@ export default function Tousousya() {
                 : 'slideUp 0.3s ease-out',
             }}
           >
+            {missions[selectedLocation - 1] && (
+              <Image
+                src="/img/missionclear.png"
+                alt="Mission Cleared"
+                width={200}
+                height={0}
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 top-5"
+              />
+            )}
             <MissionDetails missionId={selectedLocation} />
           </div>
         )}
