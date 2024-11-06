@@ -87,10 +87,18 @@ export default function Tousousya() {
       <main className="flex-grow relative flex justify-center items-start pt-4">
         <Image src="/img/map_black.png" alt="Map" width={360} height={360} />
         {coordinates.map((coord) => (
-          <div
+          <Image
             key={coord.id}
-            className="absolute bg-blue-500 rounded-full w-4 h-4 border-2 border-white"
-            style={{ left: coord.x, top: coord.y }}
+            src="/img/location_orange.png"
+            alt="Location"
+            width={30}
+            height={30}
+            className="absolute"
+            style={{ 
+              left: coord.x, 
+              top: coord.y,
+              transform: 'translate(-50%, -50%)'
+            }}
           />
         ))}
       </main>
