@@ -12,11 +12,8 @@ async function startGame(){
         isCleared:false
     });
     await setDoc(doc(db, "mission", "1"), {
-        isCleared:true
+        isCleared:false
     });
-
-    //clear all data
-    
 
     //set current time to property
     await setDoc(doc(db, "property", "default"), {
