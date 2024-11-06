@@ -1,5 +1,5 @@
 import { db } from "@/app/config/firebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 export function GET(request: NextRequest): NextResponse {
@@ -15,6 +15,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<unknown>>
     await addDoc(collection(db, "message"), {
         text: `ミッション${id}がクリアされました。\n一人解放されます`,
         createdAt: Date.now()
+    });
+    await setDoc(doc(db, "mission", id), {
+        isCleared:true
     });
     return NextResponse.json({ message: `Received ID: ${id}` });
 }
