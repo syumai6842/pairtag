@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<unknown>>
     // POST /api/users リクエストの処理
     console.log(id);
     await addDoc(collection(db, "message"), {
-        text: `ミッション${id}がクリアされました`,
+        text: `ミッション${id}がクリアされました。\n一人解放されます`,
         createdAt: Date.now()
     });
     return NextResponse.json({ message: `Received ID: ${id}` });

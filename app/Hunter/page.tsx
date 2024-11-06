@@ -1,16 +1,34 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GetLocation, SetLocation } from "../config/firebaseService";
+import { motion, AnimatePresence } from "framer-motion";
 import "../globals.css";
 import Image from "next/image";
 
-const coordinates = [
-  { id: 1, x: 100, y: 150 },
-  { id: 2, x: 200, y: 250 },
-  { id: 3, x: 300, y: 350 },
-];
+function CoodToPosition(lat:number, lng:number):{x:number, y:number} {
+  const windowSize = {width:360, height: 672};
+  const mapStartPoint:{lat:number, lng:number} = {lat:33.973011, lng:134.363519};
+  const mapEndPoint:{lat:number, lng:number} = {lat:33.972478, lng:134.362219};
+  const mapSize:{lat:number, lng:number} = {lat:Math.abs(mapStartPoint.lat-mapEndPoint.lat), lng:Math.abs(mapStartPoint.lng-mapEndPoint.lng)};
+  const distanceFromStart:{lat:number, lng:number} = {lat:mapStartPoint.lat - lat, lng:lng - mapStartPoint.lng};
+  
+  const distanceInPixel:{x:number, y:number} = {x:distanceFromStart.lat/mapSize.lat * windowSize.width, y:-(distanceFromStart.lng/mapSize.lng * windowSize.height)};
+  console.log(distanceInPixel);
+  return distanceInPixel;
+}
 
 export default function Hunter() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
+  const [coordinates, setCoordinates] = useState<{x: number, y: number}[]>([]);
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const loc = await GetLocation();
+      const coords = loc.map(coord => CoodToPosition(coord.lat, coord.lng));
+      setCoordinates(coords);
+    };
+    fetchCoordinates();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
@@ -85,8 +103,9 @@ export default function Hunter() {
         </div>
       </header>
       <main className="flex-grow relative flex justify-center items-start pt-4">
-        <Image src="/img/map_white.png" alt="Map" width={360} height={360} />
+        <Image src="/img/map_white.png" alt="Map" width={360} height={0} />
         {coordinates.map((coord) => (
+<<<<<<< HEAD
           <Image
             key={coord.id}
             src="/img/location_blue.png"
@@ -98,6 +117,12 @@ export default function Hunter() {
               left: coord.x - 12,
               top: coord.y - 12
             }}
+=======
+          <div
+            key={coord.x+coord.y*10}
+            className="absolute bg-blue-500 rounded-full w-4 h-4 border-2 border-white"
+            style={{ left: coord.x, top: coord.y }}
+>>>>>>> 27449f81bd2355fbcccc3e59b3eaaa806ed78c80
           />
         ))}
       </main>
