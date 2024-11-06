@@ -18,18 +18,18 @@ export async function GetLocation(): Promise<{ lat: number; lng: number; }[]> {
     return locations;
 }
 
-export async function Getmessage(): Promise<string[]> {
+export async function GetMission(): Promise<boolean[]> {
     // "locations" コレクションへの参照を取得
-    const messageRef = collection(db, "message");
-    const querySnapshot = await getDocs(query(messageRef, orderBy("createdAt", "asc")));
+    const messageRef = collection(db, "mission");
+    const querySnapshot = await getDocs(messageRef);
     
     // 取得したドキュメントをマッピングし、latとlngのプロパティを持つオブジェクトを生成
-    const locations: string[] = querySnapshot.docs.map(doc => {
+    const missions: boolean[] = querySnapshot.docs.sort((a, b) => parseInt(a.id) - parseInt(b.id)).map(doc => {
         const data = doc.data(); // 各ドキュメントのデータを取得
-        return data.text;
+        return data.isCleared;
     });
 
-    return locations;
+    return missions;
 }
 
 export async function SetLocation() {
