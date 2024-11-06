@@ -1,7 +1,7 @@
 import { db } from "./firebaseConfig";
 import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
 
-async function GetLocation(): Promise<{ lat: number; lng: number; }[]> {
+export async function GetLocation(): Promise<{ lat: number; lng: number; }[]> {
     // "locations" コレクションへの参照を取得
     const locationsRef = collection(db, "locations");
     const querySnapshot = await getDocs(locationsRef);
@@ -18,7 +18,7 @@ async function GetLocation(): Promise<{ lat: number; lng: number; }[]> {
     return locations;
 }
 
-async function Getmessage(): Promise<string[]> {
+export async function Getmessage(): Promise<string[]> {
     // "locations" コレクションへの参照を取得
     const messageRef = collection(db, "message");
     const querySnapshot = await getDocs(query(messageRef, orderBy("createdAt", "asc")));
@@ -32,7 +32,7 @@ async function Getmessage(): Promise<string[]> {
     return locations;
 }
 
-async function SetLocation() {
+export async function SetLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -52,6 +52,11 @@ async function SetLocation() {
             },
             (error) => {
                 console.error("Error getting current position: ", error);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             }
         );
     } else {
