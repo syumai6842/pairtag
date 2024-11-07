@@ -124,18 +124,12 @@ export default function Hunter() {
               <div className="absolute left-0 top-16 text-[#2B2B2B] p-8">
                 <h2 className="text-3xl font-bold mb-6 -ml-1">受信メール</h2>
                 <ul className="space-y-4">
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール1
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール2
-                  </li>
-                  <li className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                    <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
-                    メール3
-                  </li>
+                  {messages.map((message)=>(
+                    <li key={Math.random()} className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
+                      <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
+                      {message}
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
