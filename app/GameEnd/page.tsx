@@ -1,18 +1,15 @@
 'use client';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function GameEnd() {
-    useEffect(() => {
-        const audio = new Audio('/whistle.mp3');
-        audio.play().catch(error => console.log('Audio playback failed:', error));
-    }, []);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     return (
-        <div className="h-[86vh]">
+        <div className="h-[86vh]" onClick={() => setHasInteracted(true)}>
             <div className="flex items-center w-full whitespace-nowrap pt-12">
                 <div className="h-[1px] bg-white w-[35vw]"></div>
-                <h1 className="text-5xl tracking-tighter text-transparent [-webkit-text-stroke:0.75px_white] mx-4">ゲーム終了！</h1>
+                <h1 className="text-5xl tracking-tighter text-white mx-4">ゲーム終了！</h1>
                 <div className="h-[1px] bg-white w-[35vw]"></div>
             </div>
             <div className="h-full flex items-center justify-center gap-6 -mt-8 -ml-2">

@@ -64,6 +64,11 @@ export default function Tousousya() {
       }, 500);
     } else {
       setIsMailboxOpen(true);
+      setIsClosing(true);
+      setTimeout(() => {
+        setSelectedLocation(null);
+        setIsClosing(false);
+      }, 300);
     }
   };
 
