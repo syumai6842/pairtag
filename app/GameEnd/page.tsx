@@ -1,6 +1,13 @@
+'use client';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 export default function GameEnd() {
+    useEffect(() => {
+        const audio = new Audio('/whistle.mp3');
+        audio.play().catch(error => console.log('Audio playback failed:', error));
+    }, []);
+
     return (
         <div className="h-[86vh]">
             <div className="flex items-center w-full whitespace-nowrap pt-12">
@@ -16,10 +23,10 @@ export default function GameEnd() {
                     height={0}
                     sizes="100vw"
                     priority
-                    className="w-[160px] h-auto"
+                    className="w-[160px] h-auto animate-bounce-slow"
                 />
                 <div className="h-20 w-[1px] bg-white"></div>
-                <p className="text-white text-2xl text-center">
+                <p className="text-white text-2xl text-center animate-fade-in-up">
                     Thanks for<br />playing.
                 </p>
             </div>
