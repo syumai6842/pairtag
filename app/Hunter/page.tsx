@@ -5,7 +5,7 @@ import "../globals.css";
 import Image from "next/image";
 import { db } from "../config/firebaseConfig";
 import { collection, onSnapshot, Timestamp } from "firebase/firestore";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 const MAILBOX_STYLES = {
   closed: { width: '150px', height: '65px', borderRadius: '32.5px 0 0 32.5px' },
@@ -27,7 +27,6 @@ export default function Hunter() {
   const [isMailboxOpen, setIsMailboxOpen] = useState(false);
   const [isMailClosing, setIsMailClosing] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
-  const [startTime, setStartTime] = useState<Timestamp[]>([]);
   const [coordinates, setCoordinates] = useState<{x: number, y: number}[]>([]);
 
   const handleMailboxToggle = () => {
@@ -49,21 +48,18 @@ export default function Hunter() {
   };
 
   useEffect(() => {
-    const fetchCoordinates = async () => {
-      const loc = await GetLocation();
-      const coords = loc.map(coord => CoodToPosition(coord.lat, coord.lng));
-      setCoordinates(coords);
-    };
-    fetchCoordinates();
 
     onSnapshot(collection(db,"message"), (snapshot) => {
       const m = snapshot.docs.map(doc => doc.data().text);
       setMessages(m);
     });
 
-    onSnapshot(collection(db, "property"), (snapshot) => {
-      setStartTime(snapshot.docs[0].data().startTime);
+    onSnapshot(collection(db,"locations"), (snapshot) => {
+      const loc = snapshot.docs.map(doc => doc.data());
+      const coords = loc.map(coord => CoodToPosition(coord.lat, coord.lng));
+      setCoordinates(coords);
     });
+    const router = useRouter();
 
     const timer = setTimeout(() => {
       router.push('/GameEnd');

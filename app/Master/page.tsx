@@ -14,11 +14,6 @@ async function startGame(){
     await setDoc(doc(db, "mission", "1"), {
         isCleared:false
     });
-
-    //set current time to property
-    await setDoc(doc(db, "property", "default"), {
-        startTime:Timestamp.now()
-    });
 }
 
 export default function Master() {
