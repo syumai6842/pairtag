@@ -5,6 +5,7 @@ import Image from "next/image";
 import { onSnapshot, collection } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { useRouter } from "next/navigation";
+import { SetLocation } from "../config/firebaseService";
 
 const MISSIONS = [
   { id: 1, position: { left: 80, top: 510 }, reward: "ハンターが5秒間叫ぶ" },
@@ -37,12 +38,23 @@ export default function Tousousya() {
       setMessages(m);
     });
 
+    const timer2 = setTimeout(() => {
+      if(missions.every(mission => mission === false)){
+        setInterval(() => {
+          SetLocation();
+        }, 60000); // 1分 = 60000ms
+      }
+    }, 120000); // 2分 = 120000ms
+
     // ページに入って10分経ったら/GameEndに遷移する
     const timer = setTimeout(() => {
       router.push('/GameEnd');
     }, 600000); // 10分 = 600000ms
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(timer2);
+    };
   }, []);
 
   const handleMainClick = (e: React.MouseEvent) => {
