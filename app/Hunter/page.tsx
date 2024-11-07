@@ -1,10 +1,9 @@
 "use client"
 import { useEffect, useState } from "react";
-import { GetLocation } from "../config/firebaseService";
 import "../globals.css";
 import Image from "next/image";
 import { db } from "../config/firebaseConfig";
-import { collection, onSnapshot, Timestamp } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
 const MAILBOX_STYLES = {
@@ -64,6 +63,8 @@ export default function Hunter() {
     const timer = setTimeout(() => {
       router.push('/GameEnd');
     }, 600000); //
+
+    return () => {clearTimeout(timer)}
   }, []);
 
   return (

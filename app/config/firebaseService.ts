@@ -1,5 +1,5 @@
 import { db } from "./firebaseConfig";
-import { addDoc, collection, doc, getDocs, orderBy, query, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 
 export async function GetLocation(): Promise<{ lat: number; lng: number; }[]> {
     // "locations" コレクションへの参照を取得

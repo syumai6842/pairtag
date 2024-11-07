@@ -1,5 +1,5 @@
 "use client"
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import "../globals.css";
 import { db } from "../config/firebaseConfig";
 

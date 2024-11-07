@@ -1,12 +1,10 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export default function GameEnd() {
-    const [hasInteracted, setHasInteracted] = useState(false);
 
     return (
-        <div className="h-[86vh]" onClick={() => setHasInteracted(true)}>
+        <div className="h-[86vh]">
             <div className="flex items-center w-full whitespace-nowrap pt-12">
                 <div className="h-[1px] bg-white w-[35vw]"></div>
                 <h1 className="text-5xl tracking-tighter text-white mx-4">ゲーム終了！</h1>
