@@ -27,6 +27,7 @@ export default function Hunter() {
   const [isMailClosing, setIsMailClosing] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [coordinates, setCoordinates] = useState<{x: number, y: number}[]>([]);
+  const router = useRouter(); // useRouterをここで呼び出し
 
   const handleMailboxToggle = () => {
     if (isMailboxOpen) {
@@ -58,10 +59,9 @@ export default function Hunter() {
       const coords = loc.map(coord => CoodToPosition(coord.lat, coord.lng));
       setCoordinates(coords);
     });
-    const router = useRouter();
 
     const timer = setTimeout(() => {
-      router.push('/GameEnd');
+      router.push('/GameEnd'); // useRouterをここで使用
     }, 600000); //
 
     return () => {clearTimeout(timer)}
