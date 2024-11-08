@@ -123,7 +123,7 @@ export default function Hunter() {
                 <ul className="space-y-4">
                   {messages.map((message)=>(
                     <li key={Math.random()} className="text-2xl hover:text-gray-600 cursor-pointer flex items-center">
-                      <div className="w-4 h-4 bg-[#D07320] mr-3"></div>
+                      <div className="w-4 h-4 bg-[#5EA4BF] mr-3"></div>
                       {message}
                     </li>
                   ))}
