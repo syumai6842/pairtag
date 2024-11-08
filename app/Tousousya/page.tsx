@@ -39,11 +39,11 @@ export default function Tousousya() {
     });
 
     const timer2 = setTimeout(() => {
-      if(missions.every(mission => mission === false)){
         setInterval(() => {
-          SetLocation();
+          if(missions.every(mission => mission === false)){
+            SetLocation();
+          }
         }, 60000); // 1分 = 60000ms
-      }
     }, 120000); // 2分 = 120000ms
 
     // ページに入って10分経ったら/GameEndに遷移する
